@@ -92,7 +92,7 @@ INSERT INTO Applications ( JobID, ApplicantID, ApplicationDate, CoverLetter) VAL
 ( 6,6, 5, '2023-10-26 06:20:00', 'I am very interested in the Software Engineer position');
 SELECT * FROM Applications
 
---1.Provide a SQL script that initializes the database for the Job Board scenario “CareerHub”.  
+--1.Provide a SQL script that initializes the database for the Job Board scenario â€œCareerHubâ€.  
 CREATE DATABASE CareerHub;
 
 --2.Create tables for Companies, Jobs, Applicants and Applications. 
@@ -242,13 +242,9 @@ ON app.JobID = j.JobID;
 
    
 --20.List all combinations of applicants and companies where the company is in a specific city and the applicant has more than 2 years of experience. For example: city=Chennai 
-   SELECT 
-    a.ApplicantID, 
-    a.FirstName, 
-    a.LastName, 
-    c.CompanyName, 
-    j.JobTitle
+   DECLARE @City VARCHAR(255) = 'Chennai';
+
+SELECT a.FirstName, a.LastName, c.CompanyName
 FROM Applicants a
-JOIN Applications app ON a.ApplicantID = app.ApplicantID
-JOIN Jobs j ON app.JobID = j.JobID
-JOIN Companies c ON j.CompanyID = c.CompanyID;
+CROSS JOIN Companies c
+WHERE c.Location = @City AND a.YearsOfExperience > 2;
